@@ -1,0 +1,10 @@
+./allrep/Exp10 Result/allrep/Exp10.txt
+./allrep/Cosh Result/allrep/Cosh.txt
+./allrep/Cospi Result/allrep/Cospi.txt
+./allrep/Exp Result/allrep/Exp.txt
+./allrep/Exp2 Result/allrep/Exp2.txt
+./allrep/Log Result/allrep/Log.txt
+./allrep/Log2 Result/allrep/Log2.txt
+./allrep/Log10 Result/allrep/Log10.txt
+./allrep/Sinh Result/allrep/Sinh.txt
+./allrep/Sinpi Result/allrep/Sinpi.txt

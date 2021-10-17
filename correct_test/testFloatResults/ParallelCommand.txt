@@ -1,0 +1,10 @@
+./RunLog.sh
+./RunLog2.sh
+./RunLog10.sh
+./RunExp.sh
+./RunExp2.sh
+./RunExp10.sh
+./RunSinh.sh
+./RunCosh.sh
+./RunSinpi.sh
+./RunCospi.sh
