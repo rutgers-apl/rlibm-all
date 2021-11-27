@@ -91,7 +91,7 @@ int main() {
   float result = rlibm34_cospi(1.5f);
     return 0;
     }
-    ```
+```
 
 To build the program, include the math library in the compilation command:
 ```
