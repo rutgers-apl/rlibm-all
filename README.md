@@ -98,7 +98,7 @@ To build the program, include the math library in the compilation command:
 g++ test.cpp -I<path-to-rlibm-all>/include/ <path-to-rlibm-all>/lib/float34ROMathLib.a -lm -o test
 ```
 
-To see a sample program that uses OurLibm, please look into the "sample" directory. It is a simple program that computes `e^0.005 / sinpi(0.75)`. The makefile shows how to link the library and the dependency. Currently, RLIBM-ALL uses some functions from the default math library for range reduction (i.e., to decompose a floating point value into the integral part and fractional part) so make sure to include `-lm` flag.
+To see a sample program that uses OurLibm, please look into the `sample` directory. It is a simple program that computes `e^0.005 / sinpi(0.75)`. The makefile shows how to link the library and the dependency. Currently, RLIBM-ALL uses some functions from the default math library for range reduction (i.e., to decompose a floating point value into the integral part and fractional part) so make sure to include `-lm` flag.
 
 
 
@@ -209,3 +209,77 @@ sudo docker cp <container id>:/home/POPL2022Artifact/SpeedupOverRlibm32.pdf .
 sudo docker start <container id>
 sudo docker attach <container id>
 ```
+
+
+
+# How to generate polynomials
+
+* In general, generating a polynomial that produces the correctly rounded results for a given domain of inputs consists of three steps:
+1. Computing the oracle result (34-bit floating point repesentation with the round-to-odd rounding mode)
+2. Computing the odd intervals and the reduced intervals
+3. Generating the polynomials based on the reduced intervals
+
+
+* The directory `smallGenerationTest` shows how to execute each of the three steps using the artifact. The source code for each step is organized into separate directories:
+1. GenerateOracleFiles : Compute rno result and store into oracle_file
+2. IntervalGen : Compute reduced intervals using oracle_file and store into interval_file
+3. functiongen : Use interval_files to generate polynomials and generate a table of coefficients
+
+We now describe what must be provided to perform each of the steps using the files in the smallGenerationTest directory. More details can be found in the comments of each file preluded with "TODO"
+
+### Step 1: GenerateOracleFiles/Log2Small.c
+* The function `ComputeOracleResult` must provide a way to compute the correctly rounded rno result of f(x) given any input. Currently, this function produces correctly rounded rno results for `log2(x)`.
+* In the `main` function, the RunTestHelper must be provided with the domain of inputs using the bit-patterns of the 32-bit float representation. For example, `[0x3f800000, 0x40000000)` is equivalent to an input domain of `[1.0, 2.0)`
+* To generate the oracle file, use the following command:
+```
+./Log2Small <file to store rno results>
+```
+
+### Step 2: IntervalGen/Log2Small.cpp
+There are several things that must be provided to generate correctly generate reduced intervals. These functions need to be customized for the specific f(x) function. If a component is incorrect, it is common to see an infinite loop.
+* `ComputeSpecialCase` function : Given an input "x", determine whether f(x) is a special case value. Specifically, it is important to correctly determine whether f(x) is infinity, NaN, or the odd interval is a singleton interval. If it is, store the correct result in "res" and return true. Otherwise, return false.
+* `RangeReduction` function : The implementation of the range reduction function. If not using range reduction strategy, simply return "x"
+* `OutputCompensation` function: The implementation of the output compensation function. If not using range reduction strategy, simply return "yp"
+* `GuessInitialLbUb` function: To accurately compute the reduced interval, we need an initial point in the reduced interval. This initial point, when used with the output compensation function, must result in a value within the rounding interval. The initial point can be computed using the function that the polynomial is approximation. In most cases, that would be f(x) itself, unless the range reduction strategy performs function transformation (i.e. the range reduction strategy we use for log2(x)). Provide the initial guess into the variable "double initialGuess." 
+- Note : If the initialGuess misses the rounding interval by a few ulps, don't worry too much. The bulk of the code in `GuessInitialLbUb` tries to wiggle around initialGuess to find a point that will result in the rounding interval.
+* `SpecCaseRedInt` function : This function is for very special case, where you need special computation to compute the reduced interval. In other words, you can use "SpecCaseRedInt" to implement your own algorithm to identify the reduced intervals. If you leave it as it is, the program will use a naive method to identify the reduced intervals, which is sufficient most of the time.
+* `main` function : Make sure to provide the input domain. This must match exactly with the domain provided during Step 1.
+* To generate the reduced intervals, use the following command:
+```
+./Log2Small <file to store interval information> <name of file containing rno results>
+```
+
+### Step 3: functiongen/Log2Small.cpp 
+* The "power" vector describes the shape of the polynomial. For example, `{1, 2, 3, 4, ... 8}` indicates that we want to create a polynomial of the form c_1 x + c_2 x^2 + ... + c_8 x^8. Depending on the function you want to approximate, you may want to change the shape of the polynomial. For example,
+  - e^x : `{0, 1, 2, 3, 4, ...}`
+  - sin(x) : `{1, 3, 5, ...}`
+  - Note : functiongen will automatically try to generate the lowest degree polynomial, even if you specify much more terms in the vector.
+
+* To generate the polynomials based on the generated reduced intervals, use the following command:
+```
+./Log2Small <file with interval info.> <log file output> <header file output> <size of piecewise polynomial in logscale, i.e., N creates 2^N polynomials>
+```
+
+* If the header file has values in the array, it means the polynomial was successfully generated. If the array is empty, then the polynomial was unsuccessful. You can check the log file to see what's going on.
+
+* If you use `GenerationTest.sh` to automate the process for you, the header file will be located in `smallGenerationTest/include/float34RO_headers`. 
+
+### Generated coefficients 
+* Once all three steps are done, the <header file output> should contain an 2-D array. 
+* Each array represents a polynomial in the piecewise polynomial. Each value in the array represents the coefficients.
+* The coefficients corresponds to each of the terms specified in the "power" vector.
+
+### Creating implementation
+* Using the generated polynomial, you can come the range reduction function, output compensation function, and the special case functions to implement f(x)!
+* The implementation of log2(x) for our small sample is in smallGenerationTest/source/log2small.c
+* Edit this file accordingly
+
+### Testing 
+* Make sure that you edit the testing script in `smallGenerationTest/correct_test` as well.
+* The testing script is in `smallGenerationTest/correct_test`. The main file to change is LibTestHelper.h. This script uses the generated oracle file to compare against the implementation. Make sure that we are iterating through the correct input domain. Otherwise, we may see unexpected results. 
+
+
+### We we generated the functions for RLIBM-ALL
+* The root directory has `GenerateOracleFiles`, `IntervalGen`, and `functiongen` by itself. 
+* You can find the exact configuration we used to generate the polynomials. 
+* Be aware that using these code directly will take several hours to generate polynomials.
