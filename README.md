@@ -212,7 +212,7 @@ sudo docker attach <container id>
 
 
 
-# How to generate polynomials
+# How to Generate Polynomials
 
 * In general, generating a polynomial that produces the correctly rounded results for a given domain of inputs consists of three steps:
 1. Computing the oracle result (34-bit floating point repesentation with the round-to-odd rounding mode)
@@ -279,7 +279,7 @@ There are several things that must be provided to generate correctly generate re
 * The testing script is in `smallGenerationTest/correct_test`. The main file to change is LibTestHelper.h. This script uses the generated oracle file to compare against the implementation. Make sure that we are iterating through the correct input domain. Otherwise, we may see unexpected results. 
 
 
-### We we generated the functions for RLIBM-ALL
+### How we generated the functions for RLIBM-ALL
 * The root directory has `GenerateOracleFiles`, `IntervalGen`, and `functiongen` by itself. 
 * You can find the exact configuration we used to generate the polynomials. 
 * Be aware that using these code directly will take several hours to generate polynomials.
