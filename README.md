@@ -97,7 +97,9 @@ To build the program, include the math library in the compilation command:
 ```
 g++ test.cpp -I<path-to-rlibm-all>/include/ <path-to-rlibm-all>/lib/float34ROMathLib.a -lm -o test
 ```
-Currently, RLIBM-ALL uses some functions from the default math library for range reduction (i.e., to decompose a floating point value into the integral part and fractional part) so make sure to include `-lm` flag.~
+
+To see a sample program that uses OurLibm, please look into the "sample" directory. It is a simple program that computes `e^0.005 / sinpi(0.75)`. The makefile shows how to link the library and the dependency. Currently, RLIBM-ALL uses some functions from the default math library for range reduction (i.e., to decompose a floating point value into the integral part and fractional part) so make sure to include `-lm` flag.
+
 
 
 
