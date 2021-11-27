@@ -65,16 +65,16 @@ export SOFTPOSITPATH=<path-to-softposit-directory>
   
 2. Build the math library
   1. If you want to build all the math libraries, simply use make rule from the root directory
-  ```
-  cd <path-to-rlibm-all>
-  make
-  ```
+```
+cd <path-to-rlibm-all>
+make
+```
 
   2. If you want to build math libraries for just the floating point representation, you can use this make rule
-  ```
-  cd <path-to-rlibm-all>
-  make float34ROmlibm
-  ```
+```
+cd <path-to-rlibm-all>
+make float34ROmlibm
+```
 
 ### USAGE
 The math library will be located in the `lib` directory.
@@ -89,8 +89,8 @@ test.cpp:
 #include "float34RO_math.h"
 int main() {
   float result = rlibm34_cospi(1.5f);
-    return 0;
-    }
+  return 0;
+}
 ```
 
 To build the program, include the math library in the compilation command:
@@ -116,26 +116,26 @@ make
 
 1. To test the correctness of RLIBM-ALL's floating point functions for some randomly distributed inputs, use the following command, 
 ```
-$ ./CorrTestRLibmAll.sh
+./CorrTestRLibmAll.sh
 ```
 
 * This script will take roughly 15 minutes. This script tests whether ourLibm produces the correctly rounded results for uniformly sampled FP inputs with different amount of exponent bits (and mantissa bits), for all standard rounding modes. If the testing is successful, you should see "check" in green text, for each elementary function and for representations with different exponent bits. Otherwise, it will print "incorrect" in red text, which signifies that the test has failed.
 
 2. We also set up a test script to run this test for ALL possible FP inputs. However, this will take > 48 hours, even when run in parallel...
 ```
-$ ./CorrTestRLibmAll_Full.sh
+./CorrTestRLibmAll_Full.sh
 ```
 
 3. To test the correctness of mainstream math libraries, run the bash script,
 ```
-$ ./CorrTestMlibs.sh
+./CorrTestMlibs.sh
 ```
 
 * This script will take roughly 15 minutes. This script tests whether different math libraries produce correctly rounded results. We uniformly sample inputs out of 4 billion float inputs. 
 
 4.  We also set up a test script to run this test for ALL possible float inputs. However, this will take roughly 6 hours to complete.
 ```
-$ ./CorrTestMlibs_Full.sh
+./CorrTestMlibs_Full.sh
 ```
 
 
@@ -182,7 +182,7 @@ make
 ### Testing
 * To test the performance of glibc, intel, CR-LIBM, and RLIBM-ALL for the floating point functions, use the pre-assembled testing script:
 ```
-$ ./PerfTest.sh
+./PerfTest.sh
 ```
 
 * This script will take roughly 15 minutes. This script uniformly samples some inputs to compare the performance. Once the script terminates, you will see the following files:
@@ -204,6 +204,6 @@ sudo docker cp <container id>:/home/POPL2022Artifact/SpeedupOverRlibm32.pdf .
 
 * To go back into docker container, use the following commands:
 ```
-$ sudo docker start <container id>
-$ sudo docker attach <container id>
+sudo docker start <container id>
+sudo docker attach <container id>
 ```
