@@ -1,10 +1,19 @@
 # RLIBM-ALL
 
-RLibm-All is both a library that provides correctly orunded results for all inputs for multiple representations and rounding modes as well as a collection of tools used to generate the correct polynomials. See the technical report at https://arxiv.org/abs/2108.06756 for more detail. The paper describing the techniques used for RLIBM-ALL will appear in POPL 2022.
+RLIBM-ALL is a math library generator and collection of correctly
+rounded elementary functions. A single implementation for an
+elementary function produces correctly rounded results for all inputs
+with multiple representations and rounding modes.
 
-More details on the RLIBM project is available on the RLIBM project page at https://people.cs.rutgers.edu/~sn349/rlibm/.
+If you are more interested in the technical details of RLIBM-ALL, the
+following resources  will be helful.
 
-Currently, RLIbM-ALL supports a number of elementary functions for the floating point representation.
+1. [The POPL 2022 paper on RLIBM-ALL][https://people.cs.rutgers.edu/~sn349/papers/rlibmall-popl-2022.pdf]
+2. [The extended Rutgers DCS Technical Report DCS-TR-757 on RLIBM-ALL][https://arxiv.org/pdf/2108.06756.pdf]
+3. [The RLIBM project page][https://people.cs.rutgers.edu/~sn349/rlibm/]
+
+Currently, RLIBM-ALL supports a number of elementary functions for the
+floating point representation.
 
 ## List of floating point functions supported by RLIBM-ALL
 1. log(x), log2(x), log10(x)
