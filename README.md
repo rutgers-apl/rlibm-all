@@ -8,9 +8,9 @@ with multiple representations and rounding modes.
 If you are more interested in the technical details of RLIBM-ALL, the
 following resources  will be helful.
 
-1. [The POPL 2022 paper on RLIBM-ALL][https://people.cs.rutgers.edu/~sn349/papers/rlibmall-popl-2022.pdf]
-2. [The extended Rutgers DCS Technical Report DCS-TR-757 on RLIBM-ALL][https://arxiv.org/pdf/2108.06756.pdf]
-3. [The RLIBM project page][https://people.cs.rutgers.edu/~sn349/rlibm/]
+1. [The POPL 2022 paper on RLIBM-ALL](https://people.cs.rutgers.edu/~sn349/papers/rlibmall-popl-2022.pdf)
+2. [The extended Rutgers DCS Technical Report DCS-TR-757 on RLIBM-ALL](https://arxiv.org/pdf/2108.06756.pdf)
+3. [The RLIBM project page](https://people.cs.rutgers.edu/~sn349/rlibm/)
 
 Currently, RLIBM-ALL supports a number of elementary functions for the
 floating point representation.
