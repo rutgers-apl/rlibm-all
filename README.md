@@ -45,7 +45,7 @@ testing it, or generating polynomials.  We describe the pre-requisites
 in each section. Alternatively, we have set up a docker image that
 contains the pre requisites and environment variables set up already.
 
-### Using Docker Image to use the POPL 2022 Artifact
+### Using Docker Image (the POPL 2022 Artifact)
 1. Install docker if not already installed by following the installation documentation in this link: https://docs.docker.com/install/
 
 2. Download the docker image
