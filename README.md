@@ -1,12 +1,13 @@
 # RLIBM-ALL
 
 RLIBM-ALL is a math library generator and collection of correctly
-rounded elementary functions. A single implementation for an
-elementary function produces correctly rounded results for all inputs
-with multiple representations and rounding modes.
+rounded elementary functions. Given an elementary function, a single
+polynomial approximation in RLIBM-ALL produces correctly rounded
+results for all inputs with multiple representations and rounding
+modes.
 
-If you are more interested in the technical details of RLIBM-ALL, the
-following resources  will be helful.
+If you are interested in the technical details of RLIBM-ALL, the
+following resources will be helful.
 
 1. [The POPL 2022 paper on RLIBM-ALL](https://people.cs.rutgers.edu/~sn349/papers/rlibmall-popl-2022.pdf)
 2. [The extended Rutgers DCS Technical Report DCS-TR-757 on RLIBM-ALL](https://arxiv.org/pdf/2108.06756.pdf)
@@ -38,10 +39,13 @@ floating point representation.
 
 
 # Getting started with RLIBM-ALL:
-There are various pre-requisites for using RLIBM-ALL math library, testing it, or generating polynomials.
-We describe the pre-requisites in each section. Alternatively, we have set up a docker image that contains the pre requisites and environment variables set up already. 
 
-### Using Docker Image
+There are various pre-requisites for using RLIBM-ALL math library,
+testing it, or generating polynomials.  We describe the pre-requisites
+in each section. Alternatively, we have set up a docker image that
+contains the pre requisites and environment variables set up already.
+
+### Using Docker Image to use the POPL 2022 Artifact
 1. Install docker if not already installed by following the installation documentation in this link: https://docs.docker.com/install/
 
 2. Download the docker image
@@ -107,7 +111,13 @@ To build the program, include the math library in the compilation command:
 g++ test.cpp -I<path-to-rlibm-all>/include/ <path-to-rlibm-all>/lib/float34ROMathLib.a -lm -o test
 ```
 
-To see a sample program that uses OurLibm, please look into the `sample` directory. It is a simple program that computes `e^0.005 / sinpi(0.75)`. The makefile shows how to link the library and the dependency. Currently, RLIBM-ALL uses some functions from the default math library for range reduction (i.e., to decompose a floating point value into the integral part and fractional part) so make sure to include `-lm` flag.
+To see a sample program that uses OurLibm, please look into the
+`sample` directory. It is a simple program that computes `e^0.005 /
+sinpi(0.75)`. The makefile shows how to link the library and the
+dependency. Currently, RLIBM-ALL uses some functions from the default
+math library for range reduction (i.e., to decompose a floating point
+value into the integral part and fractional part) so make sure to
+include `-lm` flag.
 
 
 
