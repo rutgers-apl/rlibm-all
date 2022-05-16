@@ -7,7 +7,7 @@ results for all inputs with multiple representations and rounding
 modes.
 
 If you are interested in the technical details of RLIBM-ALL, the
-following resources will be helful.
+following resources will be helpful.
 
 1. [The POPL 2022 paper on RLIBM-ALL](https://people.cs.rutgers.edu/~sn349/papers/rlibmall-popl-2022.pdf)
 2. [The extended Rutgers DCS Technical Report DCS-TR-757 on RLIBM-ALL](https://arxiv.org/pdf/2108.06756.pdf)
