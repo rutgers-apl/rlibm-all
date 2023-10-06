@@ -26,7 +26,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
     // Check for really special cases
     if (mpfr_nan_p(mval)) return 0.0/0.0;
     if (mpfr_zero_p(mval) && sticky == 0) return 0.0;
-    if (mpfr_inf_p(mval)) return mpfr_get_d(mval, MPFR_RNDN);
+    if (mpfr_inf_p(mval)) return mpfr_get_d(mval, MPFR_RNDZ);
 
     // Take care of positive largest value:
     cmp = mpfr_cmp_d(mval, MAXm1VAL);
@@ -112,7 +112,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             
             // 1. Find out how many precision bits we will have
             long exp;
-            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDN);
+            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDZ);
             long origExp = exp;
             fr *= 2;
             exp--;
@@ -207,7 +207,7 @@ double FromMPFRToFloat34Ro(mpfr_t mval, int sticky) {
             
             // 1. Find out how many precision bits we will have
             long exp;
-            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDN);
+            double fr = mpfr_get_d_2exp(&exp, mval, MPFR_RNDZ);
             long origExp = exp;
             fr *= 2;
             exp--;
